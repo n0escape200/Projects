@@ -1,5 +1,6 @@
 import User from "../Models/User.js";
 import bcrypt from "bcrypt";
+import { json } from "express";
 import jwt from "jsonwebtoken";
 
 export const registerUser = async (req, res) => {
@@ -43,6 +44,19 @@ export const loginUser = async (req, res) => {
       });
     } else {
       res.status(404).json("User does not exist");
+    }
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+export const findUserByIt = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json("User doesn't exist");
     }
   } catch (error) {
     res.status(400).json(error);

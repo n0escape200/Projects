@@ -172,7 +172,7 @@ const Navbar = () => {
             <div className="logedInDetails">
               <span
                 onClick={() => {
-                  navigate("/add");
+                  navigate(`/add`);
                 }}
                 className="addButton"
               >
@@ -190,7 +190,13 @@ const Navbar = () => {
                 <>
                   <div className="accountBoxMain">
                     <div className="accountBoxContent">
-                      <span>Account</span>
+                      <span
+                        onClick={() => {
+                          navigate(`/user`);
+                        }}
+                      >
+                        Account
+                      </span>
                       <span>Favourite</span>
                       <span>Help</span>
                       <span

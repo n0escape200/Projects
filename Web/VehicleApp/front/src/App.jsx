@@ -4,6 +4,7 @@ import Home from "./Routes/Components/Home.jsx";
 import Results from "./Routes/Components/Results.jsx";
 import Item from "./Routes/Components/Item.jsx";
 import Add from "./Routes/Components/Add.jsx";
+import User from "./Routes/Components/User.jsx";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route path="/results" element={<Results />} />
           <Route path="/item" element={<Item />} />
           <Route path="/add" element={<Add />} />
+          <Route path="/user" element={<User />} />
         </Routes>
       </BrowserRouter>
     </div>

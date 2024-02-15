@@ -1,9 +1,0 @@
-.resultoptionsMain {
-  margin-top: 25px;
-}
-
-.resultoptionsContent {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}

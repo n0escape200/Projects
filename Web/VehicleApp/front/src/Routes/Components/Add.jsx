@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import React from "react";
 import Navbar from "../../SubComponents/Components/Navbar.jsx";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { jwtDecode } from "jwt-decode";
 import "../CSS/Add.css";
 
 const Add = () => {
@@ -19,26 +21,6 @@ const Add = () => {
   //The data from the API call
   const [data, setData] = useState(undefined);
 
-  //Field for paylod
-  const [currentBrand, setCurrentBrand] = useState({
-    brand: undefined,
-    index: undefined,
-  });
-
-  const [currentModel, setCurrentModel] = useState(undefined);
-
-  useEffect(() => {
-    if (currentBrand.brand) {
-      console.log(currentBrand.brand);
-    }
-  }, [currentBrand]);
-
-  useEffect(() => {
-    if (currentModel) {
-      console.log(currentModel);
-    }
-  }, [currentModel]);
-
   //For deleting photos and also display the delte button over
   //the hovered image
   const [deletePhoto, setDeletePhoto] = useState(undefined);
@@ -52,6 +34,26 @@ const Add = () => {
     const url = URL.createObjectURL(file);
     setPhotoArray([...photoArray, url]);
   };
+
+  //Field for other input fields
+  const [currentBrand, setCurrentBrand] = useState({
+    brand: undefined,
+    index: undefined,
+  });
+  const [currentModel, setCurrentModel] = useState("");
+  const [km, setKM] = useState("");
+  const [cc, setCC] = useState("");
+  const [year, setYear] = useState(2024);
+  const [fuel, setFuel] = useState("Diesel");
+  const [price, setPrice] = useState("");
+  const [currency, setCurrency] = useState("EUR");
+  const [description, setDescription] = useState("");
+
+  //Used for error handleing
+  const [error, setError] = useState({ state: false, message: "...to add" });
+
+  //On 200 status
+  const [submit, setSubmit] = useState(false);
 
   //The API call witch gets the JSON from the database
   const getData = async () => {
@@ -69,6 +71,49 @@ const Add = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  //Function for submitting the data
+  const submitData = async () => {
+    const token = Cookies.get("User");
+
+    if (token) {
+      await axios
+        .post(
+          `http://localhost:3000/api/car/create/${
+            jwtDecode(token).findUser._id
+          }`,
+          {
+            brand: currentBrand.brand,
+            model: currentModel,
+            KM: parseInt(km),
+            CC: parseInt(cc),
+            year: year,
+            price: parseInt(price),
+            currency: currency,
+            fuel: fuel,
+            description: description,
+            owner: jwtDecode(token).findUser._id,
+          }
+        )
+        .then((res) => {
+          setSubmit(true);
+          setTimeout(() => {
+            setSubmit(false);
+          }, 2000);
+        })
+        .catch((err) => {
+          setError({ state: true, message: err.response.data.message });
+          setTimeout(() => {
+            setError({ error: false, message: "" });
+          }, 2000);
+        });
+    } else {
+      setError({ state: true, message: "Must login first" });
+      setTimeout(() => {
+        setError({ state: false, message: "" });
+      }, 2000);
+    }
+  };
 
   useEffect(() => {
     //Setting the first brand and it's models from 'data"
@@ -156,29 +201,66 @@ const Add = () => {
           </div>
           <div className="label">
             <span>Select KM</span>
-            <input type="number" name="" id="" />
+            <input
+              onChange={(event) => {
+                setKM(event.target.value);
+              }}
+              type="number"
+              name=""
+              id=""
+            />
           </div>
           <div className="label">
             <span>Select CC</span>
-            <input type="number" name="" id="" />
+            <input
+              onChange={(event) => {
+                setCC(event.target.value);
+              }}
+              type="number"
+              name=""
+              id=""
+            />
           </div>
           <div className="label">
             <span>Select Year</span>
-            <select id="Year">
+            <select
+              onChange={(event) => {
+                setYear(event.target.value);
+              }}
+              id="Year"
+            >
               <option value="2024">2024</option>
             </select>
           </div>
           <div className="label">
             <span>Select Fuel</span>
-            <select id="Fuel">
+            <select
+              onChange={(event) => {
+                setFuel(event.target.value);
+              }}
+              id="Fuel"
+            >
               <option value="Diesel">Diesel</option>
             </select>
           </div>
           <div className="label">
             <span>Price:</span>
             <div className="currency">
-              <input type="number" name="" id="" />
-              <select name="currency" id="">
+              <input
+                onChange={(event) => {
+                  setPrice(event.target.value);
+                }}
+                type="number"
+                name=""
+                id=""
+              />
+              <select
+                onChange={(event) => {
+                  setCurrency(event.target.value);
+                }}
+                name="currency"
+                id=""
+              >
                 <option value="EUR">EUR</option>
                 <option value="USD">USD</option>
               </select>
@@ -253,10 +335,20 @@ const Add = () => {
           </div>
           <div className="label description">
             <span>Description:</span>
-            <textarea name="description" id="description"></textarea>
+            <textarea
+              onChange={(event) => {
+                setDescription(event.target.value);
+              }}
+              name="description"
+              id="description"
+            ></textarea>
           </div>
         </div>
-        <div className="submit">Submit</div>
+        <div onClick={submitData} className="submit">
+          Submit
+        </div>
+        {error.state && <div className="errorMsg">{error.message}</div>}
+        {submit && <div className="submitMsg">Submision added</div>}
       </div>
     </div>
   );

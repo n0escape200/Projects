@@ -19,11 +19,15 @@ const carModel = mongoose.Schema(
       required: true,
     },
     year: {
-      type: String,
+      type: Number,
       required: true,
     },
     price: {
       type: Number,
+      required: true,
+    },
+    currency: {
+      type: String,
       required: true,
     },
     description: {
@@ -35,6 +39,10 @@ const carModel = mongoose.Schema(
       required: true,
     },
     photos: [String],
+    owner: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

@@ -140,3 +140,22 @@
   color: red;
   transition: 0.2s;
 }
+
+.errorMsg {
+  background-color: red;
+  color: white;
+  padding: 5px 10px 5px 10px;
+  position: fixed;
+  top: 50%;
+  left: 40%;
+}
+
+.submitMsg {
+  background-color: greenyellow;
+  color: white;
+  padding: 5px 10px 5px 10px;
+  position: fixed;
+  top: 50%;
+  left: 40%;
+  text-shadow: 0px 0px 6px #000000;
+}
