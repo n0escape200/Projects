@@ -25,6 +25,7 @@ const Navbar = () => {
     username: "",
     password: "",
     confirm: "",
+    phone: "",
     email: "",
   });
 
@@ -79,6 +80,7 @@ const Navbar = () => {
         username: registerData.username,
         email: registerData.email,
         password: registerData.password,
+        phone: registerData.phone,
       })
       .then((_) => {
         setRegister(0);
@@ -129,6 +131,10 @@ const Navbar = () => {
   };
   const handleRegisterEmail = (event) => {
     setRegisterData({ ...registerData, email: event.target.value });
+  };
+
+  const handleRegisterPhone = (event) => {
+    setRegisterData({ ...registerData, phone: event.target.value });
   };
 
   return (
@@ -309,6 +315,10 @@ const Navbar = () => {
                         name=""
                         id="confirmReg"
                       />
+                    </div>
+                    <div className="label">
+                      <span>Phone:</span>
+                      <input onChange={handleRegisterPhone} type="text" />
                     </div>
                     <div className="label">
                       <span>Email:</span>

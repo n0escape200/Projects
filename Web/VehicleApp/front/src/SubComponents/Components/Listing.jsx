@@ -1,7 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../CSS/Listing.css";
 
 const Listing = ({
+  id,
   type,
   brand,
   model,
@@ -13,8 +15,14 @@ const Listing = ({
   currency,
   photos = [],
 }) => {
+  const navigate = useNavigate();
   return (
-    <div className="listingMain">
+    <div
+      onClick={() => {
+        navigate(`/item/${id}`);
+      }}
+      className="listingMain"
+    >
       <div className="listingContent">
         {type == "portrait" ? (
           <div className="portrait">

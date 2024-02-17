@@ -35,6 +35,7 @@ const User = () => {
             `http://localhost:3000/api/car/findById/${element}`
           );
           return {
+            id: element,
             type: "portrait",
             brand: res.data.brand,
             model: res.data.model,
@@ -49,9 +50,9 @@ const User = () => {
 
         const listings = await Promise.all(promises);
         setCarList(
-          listings.map((listing, index) => (
+          listings.map((item, index) => (
             <div key={index}>
-              <Listing {...listing} />
+              <Listing {...item} />
             </div>
           ))
         );

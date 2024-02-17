@@ -48,6 +48,11 @@ const Add = () => {
   const [price, setPrice] = useState("");
   const [currency, setCurrency] = useState("EUR");
   const [description, setDescription] = useState("");
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [condition, setCondition] = useState("");
 
   //Used for error handleing
   const [error, setError] = useState({ state: false, message: "...to add" });
@@ -93,6 +98,11 @@ const Add = () => {
             fuel: fuel,
             description: description,
             owner: jwtDecode(token).findUser._id,
+            country: country,
+            county: state,
+            address: address,
+            city: city,
+            condition: condition,
           }
         )
         .then((res) => {
@@ -114,14 +124,6 @@ const Add = () => {
       }, 2000);
     }
   };
-
-  useEffect(() => {
-    //Setting the first brand and it's models from 'data"
-    if (data) {
-      setCurrentBrand({ brand: data[0].brand, index: 0 });
-      setCurrentModel(data[0].models[0]);
-    }
-  }, [data]);
 
   const handleBrand = (event) => {
     setCurrentBrand((prevData) => ({ ...prevData, brand: event.target.value }));
@@ -172,8 +174,9 @@ const Add = () => {
         </div>
         <div className="middle">
           <div className="label">
-            <span>Select Brand</span>
+            <span>Brand</span>
             <select onChange={handleBrand} id="Brand">
+              <option value="">Select...</option>
               {data &&
                 data.map((item, index) => (
                   <option key={index} value={item.brand}>
@@ -183,7 +186,7 @@ const Add = () => {
             </select>
           </div>
           <div className="label">
-            <span>Select Model</span>
+            <span>Model</span>
             <select
               onChange={(event) => {
                 setCurrentModel(event.target.value);
@@ -191,6 +194,7 @@ const Add = () => {
               id="Model"
               value={currentModel}
             >
+              <option value="">Select...</option>
               {data &&
                 currentBrand &&
                 data[currentBrand.index] &&
@@ -200,7 +204,22 @@ const Add = () => {
             </select>
           </div>
           <div className="label">
-            <span>Select KM</span>
+            <span>Condition</span>
+            <select
+              onChange={(event) => {
+                setCondition(event.target.value);
+              }}
+              name=""
+              id=""
+            >
+              <option value="">Select...</option>
+              <option value="New">New</option>
+              <option value="Used">Used</option>
+              <option value="Unusable">Unusable</option>
+            </select>
+          </div>
+          <div className="label">
+            <span>KM</span>
             <input
               onChange={(event) => {
                 setKM(event.target.value);
@@ -229,6 +248,7 @@ const Add = () => {
               }}
               id="Year"
             >
+              <option value="">Select...</option>
               <option value="2024">2024</option>
             </select>
           </div>
@@ -240,7 +260,9 @@ const Add = () => {
               }}
               id="Fuel"
             >
+              <option value="">Select...</option>
               <option value="Diesel">Diesel</option>
+              <option value="Diesel">Gasoline</option>
             </select>
           </div>
           <div className="label">
@@ -265,6 +287,54 @@ const Add = () => {
                 <option value="USD">USD</option>
               </select>
             </div>
+          </div>
+          <div className="label">
+            <span>Country:</span>
+            <select
+              onChange={(event) => {
+                setCountry(event.target.value);
+              }}
+              name=""
+              id=""
+            >
+              <option value="">Select...</option>
+              <option value="Romania">Romania</option>
+            </select>
+          </div>
+          <div className="label">
+            <span>County/State:</span>
+            <select
+              onChange={(event) => {
+                setState(event.target.value);
+              }}
+              name=""
+              id=""
+            >
+              <option value="">Select...</option>
+              <option value="Suceava">Suceava</option>
+            </select>
+          </div>
+          <div className="label">
+            <span>City</span>
+            <select
+              onChange={(event) => {
+                setCity(event.target.value);
+              }}
+              name=""
+              id=""
+            >
+              <option value="">Select...</option>
+              <option value="Radauti">Radauti</option>
+            </select>
+          </div>
+          <div className="label">
+            <span>Address:</span>
+            <input
+              onChange={(event) => {
+                setAddress(event.target.value);
+              }}
+              type="text"
+            />
           </div>
           <div>
             <span>Add photos:</span>

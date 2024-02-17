@@ -18,3 +18,7 @@
   flex-wrap: wrap;
   gap: 25px;
 }
+
+.listingMain:hover {
+  cursor: pointer;
+}
