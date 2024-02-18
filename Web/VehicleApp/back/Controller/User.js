@@ -1,6 +1,5 @@
 import User from "../Models/User.js";
 import bcrypt from "bcrypt";
-import { json } from "express";
 import jwt from "jsonwebtoken";
 
 export const registerUser = async (req, res) => {
@@ -65,11 +64,14 @@ export const findUserByIt = async (req, res) => {
 
 export const updateUserById = async (req, res) => {
   try {
-    const data = req.body;
-    const user = await User.findByIdAndUpdate(req.params.id, { data });
-    await user.save();
+    let data = req.body;
+    if (data.password) {
+      const hash = bcrypt.hashSync(data.password, 12);
+      data = { ...data, password: hash };
+    }
+    const user = await User.findByIdAndUpdate(req.params.id, data);
     if (user) {
-      res.status(200).json("User update");
+      res.status(200).json("User updated");
     } else {
       res.status(404).json("User doesn't exist");
     }

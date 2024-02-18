@@ -12,7 +12,7 @@ const Settings = () => {
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [confirmPassword, setCOnfirmPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
   const [phone, setPhone] = useState();
 
   const getData = async () => {
@@ -30,9 +30,17 @@ const Settings = () => {
     getData();
   }, []);
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  const updateData = async (data) => {
+    await axios
+      .post(`http://localhost:3000/api/user/updateUser/${params.id}`, data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    getData();
+  };
 
   return (
     <div className="settingsMain">
@@ -40,45 +48,103 @@ const Settings = () => {
       {user && (
         <div className="settingsContent">
           <div className="label">
-            <span>First name:</span>
+            <h3>Chnage the name:</h3>
+            <span>First name</span>
             <input
               onChange={(event) => {
                 setFirstName(event.target.value);
               }}
+              placeholder={user.firstname}
               type="text"
               name=""
-              id=""
-              placeholder=""
+              id="firstName"
             />
-          </div>
-          <div className="label">
-            <span>Last name:</span>
+            <span>Last name</span>
             <input
               onChange={(event) => {
                 setLastName(event.target.value);
               }}
+              placeholder={user.lastname}
               type="text"
               name=""
-              id=""
+              id="lastName"
             />
+            <span
+              onClick={() =>
+                updateData({ firstname: firstName, lastname: lastName })
+              }
+              className="submit"
+            >
+              Submit
+            </span>
           </div>
           <div className="label">
+            <h3>Change the email:</h3>
             <span>Email:</span>
-            <input placeholder={user.email} type="email" name="" id="" />
+            <input
+              onChange={(event) => {
+                setEmail(event.target.value);
+              }}
+              placeholder={user.email}
+              type="email"
+              name=""
+              id="email"
+            />
+            <span
+              onClick={() => updateData({ email: email })}
+              className="submit"
+            >
+              Submit
+            </span>
           </div>
           <div className="label">
+            <h3>Change the password</h3>
             <span>Password:</span>
-            <input type="password" name="" id="" />
-          </div>
-          <div className="label">
+            <input
+              onChange={(event) => {
+                setPassword(event.target.value);
+              }}
+              placeholder="****"
+              type="password"
+              name=""
+              id="password"
+            />
             <span>Confirm:</span>
-            <input type="password" name="" id="" />
+            <input
+              onChange={(event) => {
+                setConfirmPassword(event.target.value);
+              }}
+              placeholder="****"
+              type="password"
+              name=""
+              id="confirmPassword"
+            />
+            <span
+              onClick={() => updateData({ password: password })}
+              className="submit"
+            >
+              Submit
+            </span>
           </div>
           <div className="label">
+            <h3>Change the phone number:</h3>
             <span>Phone:</span>
-            <input placeholder={user.phone} type="text" name="" id="" />
+            <input
+              onChange={(event) => {
+                setPhone(event.target.value);
+              }}
+              placeholder={user.phone}
+              type="text"
+              name=""
+              id="phone"
+            />
+            <span
+              onClick={() => updateData({ phone: phone })}
+              className="submit"
+            >
+              Submit
+            </span>
           </div>
-          <span className="submit">Update details</span>
         </div>
       )}
     </div>
