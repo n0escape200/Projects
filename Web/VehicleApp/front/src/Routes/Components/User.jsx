@@ -4,21 +4,20 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import Listing from "../../SubComponents/Components/Listing.jsx";
+import { useNavigate } from "react-router";
 import "../CSS/User.css";
 
 const User = () => {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState(undefined);
   const [carList, setCarList] = useState([]);
+  const id = jwtDecode(Cookies.get("User")).findUser._id;
 
   const getUserData = async () => {
-    const token = Cookies.get("User");
-
-    if (token) {
+    if (id) {
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/user/findUser/${
-            jwtDecode(token).findUser._id
-          }`
+          `http://localhost:3000/api/user/findUser/${id}`
         );
         setUserData(res.data);
       } catch (err) {
@@ -80,7 +79,15 @@ const User = () => {
           <div>LOADING...</div>
         ) : (
           <div className="userData">
-            <h1 className="username">{userData.username}</h1>
+            <span className="username">{userData.username}</span>
+            <span
+              onClick={() => {
+                navigate(`/user/settings/${id}`);
+              }}
+              className="settings"
+            >
+              Settings
+            </span>
             <div>Current car listing: {userData.data.length}</div>
             <div className="carList">{carList}</div>
           </div>

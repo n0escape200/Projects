@@ -1,0 +1,19 @@
+.userData {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.username {
+  font-size: 32px;
+}
+
+.settings {
+  font-size: 17px;
+  width: fit-content;
+}
+
+.settings:hover {
+  cursor: pointer;
+  color: rgb(67, 161, 255);
+}
