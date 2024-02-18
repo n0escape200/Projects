@@ -23,8 +23,9 @@ const Navbar = () => {
 
   const [registerData, setRegisterData] = useState({
     username: "",
+    firstname: "",
+    lastname: "",
     password: "",
-    confirm: "",
     phone: "",
     email: "",
   });
@@ -76,12 +77,7 @@ const Navbar = () => {
 
   const registerMth = async () => {
     await axios
-      .post("http://localhost:3000/api/user/register", {
-        username: registerData.username,
-        email: registerData.email,
-        password: registerData.password,
-        phone: registerData.phone,
-      })
+      .post("http://localhost:3000/api/user/register", registerData)
       .then((_) => {
         setRegister(0);
         setCompleteReg(true);
@@ -116,6 +112,7 @@ const Navbar = () => {
   const handleLoginUsername = (event) => {
     setLoginData({ ...loginData, username: event.target.value });
   };
+
   const handleLoginPassword = (event) => {
     setLoginData({ ...loginData, password: event.target.value });
   };
@@ -123,18 +120,29 @@ const Navbar = () => {
   const handleRegisterUsername = (event) => {
     setRegisterData({ ...registerData, username: event.target.value });
   };
+
   const handleRegisterPassword = (event) => {
     setRegisterData({ ...registerData, password: event.target.value });
   };
+
   const handleRegisterConfirm = (event) => {
     setRegisterData({ ...registerData, confirm: event.target.value });
   };
+
   const handleRegisterEmail = (event) => {
     setRegisterData({ ...registerData, email: event.target.value });
   };
 
   const handleRegisterPhone = (event) => {
     setRegisterData({ ...registerData, phone: event.target.value });
+  };
+
+  const handleResgiterFirstName = (event) => {
+    setRegisterData({ ...registerData, firstname: event.target.value });
+  };
+
+  const handleResgiterLastName = (event) => {
+    setRegisterData({ ...registerData, lastname: event.target.value });
   };
 
   return (
@@ -209,6 +217,7 @@ const Navbar = () => {
                         onClick={() => {
                           logOut();
                           setLoginBox(false);
+                          navigate("/");
                         }}
                       >
                         Log out
@@ -296,6 +305,24 @@ const Navbar = () => {
                         type="text"
                         name=""
                         id="usernameReg"
+                      />
+                    </div>
+                    <div className="label">
+                      <span>First name</span>
+                      <input
+                        onChange={handleResgiterFirstName}
+                        type="text"
+                        name=""
+                        id="firstName"
+                      />
+                    </div>
+                    <div className="label">
+                      <span>Last name</span>
+                      <input
+                        onChange={handleResgiterLastName}
+                        type="text"
+                        name=""
+                        id="lastName"
                       />
                     </div>
                     <div className="label">

@@ -8,6 +8,13 @@ const Settings = () => {
   const params = useParams();
   const [user, setUser] = useState();
 
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setCOnfirmPassword] = useState();
+  const [phone, setPhone] = useState();
+
   const getData = async () => {
     await axios
       .get(`http://localhost:3000/api/user/findUser/${params.id}`)
@@ -34,11 +41,26 @@ const Settings = () => {
         <div className="settingsContent">
           <div className="label">
             <span>First name:</span>
-            <input type="text" name="" id="" placeholder="" />
+            <input
+              onChange={(event) => {
+                setFirstName(event.target.value);
+              }}
+              type="text"
+              name=""
+              id=""
+              placeholder=""
+            />
           </div>
           <div className="label">
             <span>Last name:</span>
-            <input type="text" name="" id="" />
+            <input
+              onChange={(event) => {
+                setLastName(event.target.value);
+              }}
+              type="text"
+              name=""
+              id=""
+            />
           </div>
           <div className="label">
             <span>Email:</span>
@@ -56,7 +78,7 @@ const Settings = () => {
             <span>Phone:</span>
             <input placeholder={user.phone} type="text" name="" id="" />
           </div>
-          <span>Update details</span>
+          <span className="submit">Update details</span>
         </div>
       )}
     </div>

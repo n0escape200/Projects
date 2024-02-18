@@ -62,3 +62,18 @@ export const findUserByIt = async (req, res) => {
     res.status(400).json(error);
   }
 };
+
+export const updateUserById = async (req, res) => {
+  try {
+    const data = req.body;
+    const user = await User.findByIdAndUpdate(req.params.id, { data });
+    await user.save();
+    if (user) {
+      res.status(200).json("User update");
+    } else {
+      res.status(404).json("User doesn't exist");
+    }
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};

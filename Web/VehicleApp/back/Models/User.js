@@ -6,8 +6,14 @@ const userModel = new mongoose.Schema(
       type: String,
       required: true,
     },
-    firstName: String,
-    lastName: String,
+    firstname: {
+      type: String,
+      required: true,
+    },
+    lastname: {
+      type: String,
+      required: true,
+    },
     email: {
       type: String,
       required: true,
