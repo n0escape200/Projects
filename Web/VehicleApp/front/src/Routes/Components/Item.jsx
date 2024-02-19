@@ -17,9 +17,10 @@ const Item = () => {
   ];
   const params = useParams();
   const [currentImg, setCurrentImg] = useState(imageArray[0]);
-  const [data, setData] = useState(undefined);
+  const [data, setData] = useState();
+  const [user, setUser] = useState();
 
-  useState(async () => {
+  const fetchData = async () => {
     await axios
       .get(`http://localhost:3000/api/car/findById/${params.id}`)
       .then((res) => {
@@ -28,12 +29,31 @@ const Item = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  useEffect(async () => {
+    fetchData();
   }, []);
+
+  useEffect(async () => {
+    console.log(data);
+    if (data) {
+      await axios
+        .get(`http://localhost:3000/api/user/findByID/${data.owner}`)
+        .then((res) => {
+          console.log(res);
+          setUser(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [data]);
 
   return (
     <div className="itemMain">
       <Navbar />
-      {data && (
+      {data && user && (
         <div className="itemContent">
           <div className="middle">
             <div className="gallery">
@@ -58,9 +78,11 @@ const Item = () => {
                 {data.price}
                 {data.currency}
               </span>
-              <span>Used</span>
-              <span>Suceava,Radauti</span>
-              <span>Mathew Smith</span>
+              <span>{data.condition}</span>
+              <span>
+                {data.country},{data.county},{data.city}
+              </span>
+              <span></span>
               <span>Private seller</span>
               <span>0787777947</span>
             </div>
