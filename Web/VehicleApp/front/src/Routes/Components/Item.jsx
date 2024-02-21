@@ -3,6 +3,7 @@ import Navbar from "../../SubComponents/Components/Navbar.jsx";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../CSS/Item.css";
+import User from "../../../../back/Models/User.js";
 const Item = () => {
   const imageArray = [
     "https://i.imgur.com/8WjcthU.jpeg",
@@ -31,22 +32,24 @@ const Item = () => {
       });
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     fetchData();
   }, []);
 
-  useEffect(async () => {
-    console.log(data);
+  const fetchUser = async () => {
+    await axios
+      .get(`http://localhost:3000/api/user/findUser/${data.owner}`)
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
     if (data) {
-      await axios
-        .get(`http://localhost:3000/api/user/findByID/${data.owner}`)
-        .then((res) => {
-          console.log(res);
-          setUser(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      fetchUser();
     }
   }, [data]);
 
@@ -80,28 +83,18 @@ const Item = () => {
               </span>
               <span>{data.condition}</span>
               <span>
+                {user.firstname} {user.lastname}
+              </span>
+              <span>
                 {data.country},{data.county},{data.city}
               </span>
               <span></span>
-              <span>Private seller</span>
-              <span>0787777947</span>
+              <span>{user.phone}</span>
             </div>
           </div>
           <div className="bottom">
             <span>Post description:</span>
-            <p>
-              Nam in sagittis velit. Suspendisse commodo malesuada lorem sit
-              amet accumsan. Pellentesque neque felis, suscipit at lectus
-              tempor, blandit euismod sapien. In eleifend, velit quis vestibulum
-              ullamcorper, leo dui vehicula libero, in ullamcorper magna magna
-              et urna. Duis congue feugiat vehicula. Sed sit amet maximus purus.
-              Donec eget arcu tempor, rhoncus enim ac, lacinia felis. Nam libero
-              enim, efficitur id enim id, gravida dapibus tellus. Duis efficitur
-              tincidunt vestibulum. Curabitur dolor orci, consectetur vitae
-              neque a, scelerisque maximus sapien. Fusce tincidunt eleifend
-              tortor, sit amet vehicula tortor faucibus non. Vestibulum sit amet
-              dui quis felis bibendum posuere.
-            </p>
+            <p>{data.description}</p>
           </div>
         </div>
       )}
