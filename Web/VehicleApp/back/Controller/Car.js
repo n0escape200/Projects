@@ -1,5 +1,6 @@
 import Car from "../Models/Car.js";
 import User from "../Models/User.js";
+import multer from "multer";
 
 export const createCar = async (req, res) => {
   try {
@@ -9,6 +10,7 @@ export const createCar = async (req, res) => {
     if (currentUser) {
       currentUser.data.push(savedCar.id);
       await currentUser.save();
+      console.log(req.body);
     } else {
       req.status(404).json("User error");
     }

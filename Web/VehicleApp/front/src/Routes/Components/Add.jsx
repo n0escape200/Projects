@@ -103,6 +103,10 @@ const Add = () => {
             address: address,
             city: city,
             condition: condition,
+            photos: photoArray,
+          },
+          {
+            headers: { "Content-Type": "multipart/form-data" },
           }
         )
         .then((res) => {
@@ -343,8 +347,7 @@ const Add = () => {
               onChange={handleAddPhoto}
               style={{ display: "none" }}
               type="file"
-              name=""
-              id=""
+              name="photos"
             />
             <div className="photoInput">
               {photoArray.length == 0 ? (
