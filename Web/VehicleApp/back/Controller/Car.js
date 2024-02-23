@@ -1,12 +1,14 @@
 import Car from "../Models/Car.js";
 import User from "../Models/User.js";
-import multer from "multer";
 
 export const createCar = async (req, res) => {
   try {
-    console.log("Files");
-    console.log(req.photos); // Log uploaded files
-    const newCar = new Car(req.body);
+    const array = [];
+    req.files.map((item) => {
+      array.push(item.filename);
+    });
+    const payload = { ...req.body, photos: array };
+    const newCar = new Car(payload);
     const savedCar = await newCar.save();
     const currentUser = await User.findById(req.params.id);
     if (currentUser) {

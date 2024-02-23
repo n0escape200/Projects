@@ -32,17 +32,11 @@ const Add = () => {
   const handleAddPhoto = (event) => {
     let array = [];
     for (let i = 0; i < event.target.files.length; i++) {
-      const element = URL.createObjectURL(event.target.files[i]);
+      const element = event.target.files[i];
       array.push(element);
     }
     setPhotoArray([...photoArray, ...array]);
   };
-
-  useEffect(() => {
-    if (photoArray) {
-      console.log(photoArray);
-    }
-  }, [photoArray]);
 
   //Field for other input fields
   const [currentBrand, setCurrentBrand] = useState({
@@ -163,7 +157,10 @@ const Add = () => {
   return (
     <div className="addMain">
       <Navbar />
-      <form encType="multipart/form-data">
+      <form
+        onSubmit={(event) => event.preventDefault()}
+        encType="multipart/form-data"
+      >
         <div className="addContent">
           <div className="top">
             <span
@@ -387,7 +384,7 @@ const Add = () => {
                         >
                           <img
                             className="imgGalleryAdd"
-                            src={item}
+                            src={URL.createObjectURL(item)}
                             value={index}
                             alt=""
                           />
@@ -432,14 +429,15 @@ const Add = () => {
               ></textarea>
             </div>
           </div>
-          <span
+          <input
             onClick={() => {
               submitData();
             }}
             className="submit"
-          >
-            Submit
-          </span>
+            type="submit"
+            value="Submit"
+          />
+
           {error.state && <div className="errorMsg">{error.message}</div>}
           {submit && <div className="submitMsg">Submision added</div>}
         </div>
