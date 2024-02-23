@@ -4,13 +4,14 @@ import multer from "multer";
 
 export const createCar = async (req, res) => {
   try {
+    console.log("Files");
+    console.log(req.photos); // Log uploaded files
     const newCar = new Car(req.body);
     const savedCar = await newCar.save();
     const currentUser = await User.findById(req.params.id);
     if (currentUser) {
       currentUser.data.push(savedCar.id);
       await currentUser.save();
-      console.log(req.body);
     } else {
       req.status(404).json("User error");
     }

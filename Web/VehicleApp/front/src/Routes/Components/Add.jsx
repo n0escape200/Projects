@@ -30,10 +30,19 @@ const Add = () => {
   };
 
   const handleAddPhoto = (event) => {
-    const file = event.target.files[0];
-    const url = URL.createObjectURL(file);
-    setPhotoArray([...photoArray, url]);
+    let array = [];
+    for (let i = 0; i < event.target.files.length; i++) {
+      const element = URL.createObjectURL(event.target.files[i]);
+      array.push(element);
+    }
+    setPhotoArray([...photoArray, ...array]);
   };
+
+  useEffect(() => {
+    if (photoArray) {
+      console.log(photoArray);
+    }
+  }, [photoArray]);
 
   //Field for other input fields
   const [currentBrand, setCurrentBrand] = useState({
@@ -82,29 +91,34 @@ const Add = () => {
     const token = Cookies.get("User");
 
     if (token) {
+      const formData = new FormData();
+
+      // Append form data fields
+      formData.append("brand", currentBrand.brand);
+      formData.append("model", currentModel);
+      formData.append("KM", km);
+      formData.append("CC", cc);
+      formData.append("year", year);
+      formData.append("price", price);
+      formData.append("currency", currency);
+      formData.append("description", description);
+      formData.append("fuel", fuel);
+      formData.append("owner", jwtDecode(token).findUser._id);
+      formData.append("country", country);
+      formData.append("county", state);
+      formData.append("address", address);
+      formData.append("city", city);
+      formData.append("condition", condition);
+      photoArray.forEach((file) => {
+        formData.append(`photos`, file);
+      });
+
       await axios
         .post(
           `http://localhost:3000/api/car/create/${
             jwtDecode(token).findUser._id
           }`,
-          {
-            brand: currentBrand.brand,
-            model: currentModel,
-            KM: parseInt(km),
-            CC: parseInt(cc),
-            year: year,
-            price: parseInt(price),
-            currency: currency,
-            fuel: fuel,
-            description: description,
-            owner: jwtDecode(token).findUser._id,
-            country: country,
-            county: state,
-            address: address,
-            city: city,
-            condition: condition,
-            photos: photoArray,
-          },
+          formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
           }
@@ -149,280 +163,287 @@ const Add = () => {
   return (
     <div className="addMain">
       <Navbar />
-      <div className="addContent">
-        <div className="top">
-          <span
-            className={active == "Cars" ? "active fltBtn" : "fltBtn"}
-            onClick={() => setActive("Cars")}
-          >
-            Cars
-          </span>
-          <span
-            className={active == "Motorcycles" ? "active fltBtn" : "fltBtn"}
-            onClick={() => setActive("Motorcycles")}
-          >
-            Motorcycles
-          </span>
-          <span
-            className={active == "Trucks" ? "active fltBtn" : "fltBtn"}
-            onClick={() => setActive("Trucks")}
-          >
-            Trucks
-          </span>
-          <span
-            className={active == "Parts" ? "active fltBtn" : "fltBtn"}
-            onClick={() => setActive("Parts")}
-          >
-            Parts
-          </span>
-        </div>
-        <div className="middle">
-          <div className="label">
-            <span>Brand</span>
-            <select onChange={handleBrand} id="Brand">
-              <option value="">Select...</option>
-              {data &&
-                data.map((item, index) => (
-                  <option key={index} value={item.brand}>
-                    {item.brand}
-                  </option>
-                ))}
-            </select>
-          </div>
-          <div className="label">
-            <span>Model</span>
-            <select
-              onChange={(event) => {
-                setCurrentModel(event.target.value);
-              }}
-              id="Model"
-              value={currentModel}
+      <form encType="multipart/form-data">
+        <div className="addContent">
+          <div className="top">
+            <span
+              className={active == "Cars" ? "active fltBtn" : "fltBtn"}
+              onClick={() => setActive("Cars")}
             >
-              <option value="">Select...</option>
-              {data &&
-                currentBrand &&
-                data[currentBrand.index] &&
-                data[currentBrand.index].models.map((item, index) => (
-                  <option key={index}>{item}</option>
-                ))}
-            </select>
-          </div>
-          <div className="label">
-            <span>Condition</span>
-            <select
-              onChange={(event) => {
-                setCondition(event.target.value);
-              }}
-              name=""
-              id=""
+              Cars
+            </span>
+            <span
+              className={active == "Motorcycles" ? "active fltBtn" : "fltBtn"}
+              onClick={() => setActive("Motorcycles")}
             >
-              <option value="">Select...</option>
-              <option value="New">New</option>
-              <option value="Used">Used</option>
-              <option value="Unusable">Unusable</option>
-            </select>
-          </div>
-          <div className="label">
-            <span>KM</span>
-            <input
-              onChange={(event) => {
-                setKM(event.target.value);
-              }}
-              type="number"
-              name=""
-              id=""
-            />
-          </div>
-          <div className="label">
-            <span>Select CC</span>
-            <input
-              onChange={(event) => {
-                setCC(event.target.value);
-              }}
-              type="number"
-              name=""
-              id=""
-            />
-          </div>
-          <div className="label">
-            <span>Select Year</span>
-            <select
-              onChange={(event) => {
-                setYear(event.target.value);
-              }}
-              id="Year"
+              Motorcycles
+            </span>
+            <span
+              className={active == "Trucks" ? "active fltBtn" : "fltBtn"}
+              onClick={() => setActive("Trucks")}
             >
-              <option value="">Select...</option>
-              <option value="2024">2024</option>
-            </select>
-          </div>
-          <div className="label">
-            <span>Select Fuel</span>
-            <select
-              onChange={(event) => {
-                setFuel(event.target.value);
-              }}
-              id="Fuel"
+              Trucks
+            </span>
+            <span
+              className={active == "Parts" ? "active fltBtn" : "fltBtn"}
+              onClick={() => setActive("Parts")}
             >
-              <option value="">Select...</option>
-              <option value="Diesel">Diesel</option>
-              <option value="Diesel">Gasoline</option>
-            </select>
+              Parts
+            </span>
           </div>
-          <div className="label">
-            <span>Price:</span>
-            <div className="currency">
+          <div className="middle">
+            <div className="label">
+              <span>Brand</span>
+              <select onChange={handleBrand} id="Brand">
+                <option value="">Select...</option>
+                {data &&
+                  data.map((item, index) => (
+                    <option key={index} value={item.brand}>
+                      {item.brand}
+                    </option>
+                  ))}
+              </select>
+            </div>
+            <div className="label">
+              <span>Model</span>
+              <select
+                onChange={(event) => {
+                  setCurrentModel(event.target.value);
+                }}
+                id="Model"
+                value={currentModel}
+              >
+                <option value="">Select...</option>
+                {data &&
+                  currentBrand &&
+                  data[currentBrand.index] &&
+                  data[currentBrand.index].models.map((item, index) => (
+                    <option key={index}>{item}</option>
+                  ))}
+              </select>
+            </div>
+            <div className="label">
+              <span>Condition</span>
+              <select
+                onChange={(event) => {
+                  setCondition(event.target.value);
+                }}
+                name=""
+                id=""
+              >
+                <option value="">Select...</option>
+                <option value="New">New</option>
+                <option value="Used">Used</option>
+                <option value="Unusable">Unusable</option>
+              </select>
+            </div>
+            <div className="label">
+              <span>KM</span>
               <input
                 onChange={(event) => {
-                  setPrice(event.target.value);
+                  setKM(event.target.value);
                 }}
                 type="number"
                 name=""
                 id=""
               />
+            </div>
+            <div className="label">
+              <span>Select CC</span>
+              <input
+                onChange={(event) => {
+                  setCC(event.target.value);
+                }}
+                type="number"
+                name=""
+                id=""
+              />
+            </div>
+            <div className="label">
+              <span>Select Year</span>
               <select
                 onChange={(event) => {
-                  setCurrency(event.target.value);
+                  setYear(event.target.value);
                 }}
-                name="currency"
-                id=""
+                id="Year"
               >
-                <option value="EUR">EUR</option>
-                <option value="USD">USD</option>
+                <option value="">Select...</option>
+                <option value="2024">2024</option>
               </select>
             </div>
-          </div>
-          <div className="label">
-            <span>Country:</span>
-            <select
-              onChange={(event) => {
-                setCountry(event.target.value);
-              }}
-              name=""
-              id=""
-            >
-              <option value="">Select...</option>
-              <option value="Romania">Romania</option>
-            </select>
-          </div>
-          <div className="label">
-            <span>County/State:</span>
-            <select
-              onChange={(event) => {
-                setState(event.target.value);
-              }}
-              name=""
-              id=""
-            >
-              <option value="">Select...</option>
-              <option value="Suceava">Suceava</option>
-            </select>
-          </div>
-          <div className="label">
-            <span>City</span>
-            <select
-              onChange={(event) => {
-                setCity(event.target.value);
-              }}
-              name=""
-              id=""
-            >
-              <option value="">Select...</option>
-              <option value="Radauti">Radauti</option>
-            </select>
-          </div>
-          <div className="label">
-            <span>Address:</span>
-            <input
-              onChange={(event) => {
-                setAddress(event.target.value);
-              }}
-              type="text"
-            />
-          </div>
-          <div>
-            <span>Add photos:</span>
-            <input
-              ref={addPhotoRef}
-              onChange={handleAddPhoto}
-              style={{ display: "none" }}
-              type="file"
-              name="photos"
-            />
-            <div className="photoInput">
-              {photoArray.length == 0 ? (
-                <>
-                  <div onClick={handleButtonClick} className="addPhotoBtn">
-                    +
-                  </div>
-                </>
-              ) : (
-                <div className="imgGallery">
-                  {photoArray.map((item, index) => {
-                    return (
-                      <div
-                        onMouseEnter={() => {
-                          setDeletePhoto(index);
-                        }}
-                        onMouseLeave={() => {
-                          setDeletePhoto(undefined);
-                        }}
-                        className="imgContainer"
-                        key={index}
-                      >
-                        <img
-                          className="imgGalleryAdd"
-                          src={item}
-                          value={index}
-                          alt=""
-                        />
-                        {deletePhoto == index && (
-                          <div
-                            onClick={() => {
-                              let aux = [];
-                              for (let i = 0; i < photoArray.length; i++) {
-                                if (i != deletePhoto) {
-                                  aux.push(photoArray[i]);
+            <div className="label">
+              <span>Select Fuel</span>
+              <select
+                onChange={(event) => {
+                  setFuel(event.target.value);
+                }}
+                id="Fuel"
+              >
+                <option value="">Select...</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Diesel">Gasoline</option>
+              </select>
+            </div>
+            <div className="label">
+              <span>Price:</span>
+              <div className="currency">
+                <input
+                  onChange={(event) => {
+                    setPrice(event.target.value);
+                  }}
+                  type="number"
+                  name=""
+                  id=""
+                />
+                <select
+                  onChange={(event) => {
+                    setCurrency(event.target.value);
+                  }}
+                  name="currency"
+                  id=""
+                >
+                  <option value="EUR">EUR</option>
+                  <option value="USD">USD</option>
+                </select>
+              </div>
+            </div>
+            <div className="label">
+              <span>Country:</span>
+              <select
+                onChange={(event) => {
+                  setCountry(event.target.value);
+                }}
+                name=""
+                id=""
+              >
+                <option value="">Select...</option>
+                <option value="Romania">Romania</option>
+              </select>
+            </div>
+            <div className="label">
+              <span>County/State:</span>
+              <select
+                onChange={(event) => {
+                  setState(event.target.value);
+                }}
+                name=""
+                id=""
+              >
+                <option value="">Select...</option>
+                <option value="Suceava">Suceava</option>
+              </select>
+            </div>
+            <div className="label">
+              <span>City</span>
+              <select
+                onChange={(event) => {
+                  setCity(event.target.value);
+                }}
+                name=""
+                id=""
+              >
+                <option value="">Select...</option>
+                <option value="Radauti">Radauti</option>
+              </select>
+            </div>
+            <div className="label">
+              <span>Address:</span>
+              <input
+                onChange={(event) => {
+                  setAddress(event.target.value);
+                }}
+                type="text"
+              />
+            </div>
+            <div>
+              <span>Add photos:</span>
+              <input
+                ref={addPhotoRef}
+                onChange={handleAddPhoto}
+                style={{ display: "none" }}
+                type="file"
+                multiple
+              />
+              <div className="photoInput">
+                {photoArray.length == 0 ? (
+                  <>
+                    <div onClick={handleButtonClick} className="addPhotoBtn">
+                      +
+                    </div>
+                  </>
+                ) : (
+                  <div className="imgGallery">
+                    {photoArray.map((item, index) => {
+                      return (
+                        <div
+                          onMouseEnter={() => {
+                            setDeletePhoto(index);
+                          }}
+                          onMouseLeave={() => {
+                            setDeletePhoto(undefined);
+                          }}
+                          className="imgContainer"
+                          key={index}
+                        >
+                          <img
+                            className="imgGalleryAdd"
+                            src={item}
+                            value={index}
+                            alt=""
+                          />
+                          {deletePhoto == index && (
+                            <div
+                              onClick={() => {
+                                let aux = [];
+                                for (let i = 0; i < photoArray.length; i++) {
+                                  if (i != deletePhoto) {
+                                    aux.push(photoArray[i]);
+                                  }
                                 }
-                              }
-                              setPhotoArray(aux);
-                            }}
-                            className="imgDel"
-                          >
-                            <FontAwesomeIcon
-                              className="trashIcon"
-                              icon={faTrash}
-                              size="2xl"
-                            />
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                  <div className="galleryBtn" onClick={handleButtonClick}>
-                    +
+                                setPhotoArray(aux);
+                              }}
+                              className="imgDel"
+                            >
+                              <FontAwesomeIcon
+                                className="trashIcon"
+                                icon={faTrash}
+                                size="2xl"
+                              />
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                    <div className="galleryBtn" onClick={handleButtonClick}>
+                      +
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
+            </div>
+            <div className="label description">
+              <span>Description:</span>
+              <textarea
+                onChange={(event) => {
+                  setDescription(event.target.value);
+                }}
+                name="description"
+                id="description"
+              ></textarea>
             </div>
           </div>
-          <div className="label description">
-            <span>Description:</span>
-            <textarea
-              onChange={(event) => {
-                setDescription(event.target.value);
-              }}
-              name="description"
-              id="description"
-            ></textarea>
-          </div>
+          <span
+            onClick={() => {
+              submitData();
+            }}
+            className="submit"
+          >
+            Submit
+          </span>
+          {error.state && <div className="errorMsg">{error.message}</div>}
+          {submit && <div className="submitMsg">Submision added</div>}
         </div>
-        <div onClick={submitData} className="submit">
-          Submit
-        </div>
-        {error.state && <div className="errorMsg">{error.message}</div>}
-        {submit && <div className="submitMsg">Submision added</div>}
-      </div>
+      </form>
     </div>
   );
 };
