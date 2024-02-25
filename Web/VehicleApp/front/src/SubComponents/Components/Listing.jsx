@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "../CSS/Listing.css";
 
 const Listing = ({
@@ -13,31 +15,43 @@ const Listing = ({
   fuel,
   price,
   currency,
-  photos = [],
+  photo = "",
 }) => {
   const navigate = useNavigate();
   return (
-    <div
-      onClick={() => {
-        navigate(`/item/${id}`);
-      }}
-      className="listingMain"
-    >
+    <div className="listingMain">
       <div className="listingContent">
         {type == "portrait" ? (
-          <div className="portrait">
-            <img src={photos[0]} />
-            <span>{brand}</span>
-            <span>{model}</span>
-            <span>{year}</span>
-            <span>
-              {price}
-              {currency}
-            </span>
+          <div className="portraitMain">
+            <div
+              onClick={() => {
+                navigate(`/item/${id}`);
+              }}
+              className="portraitContent"
+            >
+              <img src={photo} />
+              <span>{brand}</span>
+              <span>{model}</span>
+              <span>{year}</span>
+              <span>
+                {price}
+                {currency}
+              </span>
+            </div>
+            <FontAwesomeIcon
+              className="deleteListing"
+              icon={faTrash}
+              size="2xl"
+            />
           </div>
         ) : (
-          <div className="landscape">
-            <img src={photos[0]} alt="Car" />
+          <div
+            onClick={() => {
+              navigate(`/item/${id}`);
+            }}
+            className="landscape"
+          >
+            <img src={photo} alt="Car" />
             <div className="right">
               <span>{brand}</span>
               <span>{model}</span>

@@ -19,6 +19,7 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.json());
+app.use(express.static("photos"));
 
 app.use("/api/user", User);
 app.use("/api/car", Car);

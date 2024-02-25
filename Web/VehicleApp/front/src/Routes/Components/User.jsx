@@ -44,6 +44,7 @@ const User = () => {
             fuel: res.data.fuel,
             price: res.data.price,
             currency: res.data.currency,
+            photo: `../../../photos/${res.data.photos[0]}`,
           };
         });
 

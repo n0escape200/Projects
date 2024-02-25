@@ -5,19 +5,7 @@ import axios from "axios";
 import "../CSS/Item.css";
 import User from "../../../../back/Models/User.js";
 const Item = () => {
-  const imageArray = [
-    "https://i.imgur.com/8WjcthU.jpeg",
-    "https://i.imgur.com/3kBANEa.jpeg",
-    "https://i.imgur.com/qbLCVbr.jpeg",
-    "https://i.imgur.com/fIVcvs8.jpeg",
-    "https://i.imgur.com/ZYBBqWe.jpeg",
-    "https://i.imgur.com/SCX0N9m.jpeg",
-    "https://i.imgur.com/B4Y6Wp7.jpeg",
-    "https://i.imgur.com/3Jtwyuk.jpeg",
-    "https://i.imgur.com/ovfjHB2.jpeg",
-  ];
   const params = useParams();
-  const [currentImg, setCurrentImg] = useState(imageArray[0]);
   const [data, setData] = useState();
   const [user, setUser] = useState();
 
@@ -47,8 +35,15 @@ const Item = () => {
       });
   };
 
+  const [imageArray, setImageArray] = useState(undefined);
+  const [currentImg, setCurrentImg] = useState(undefined);
+
   useEffect(() => {
     if (data) {
+      setImageArray(data.photos);
+      if (imageArray) {
+        setCurrentImg(imageArray[0]);
+      }
       fetchUser();
     }
   }, [data]);
@@ -61,13 +56,13 @@ const Item = () => {
           <div className="middle">
             <div className="gallery">
               <div className="mainphoto">
-                <img src={currentImg} alt="car img" />
+                <img src={`../../../photos/${currentImg}`} alt="car img" />
               </div>
               <div className="photos">
                 {imageArray.map((value, index) => (
                   <img
                     onClick={() => setCurrentImg(value)}
-                    src={value}
+                    src={`../../../photos/${value}`}
                     alt="car image"
                     key={index}
                   />

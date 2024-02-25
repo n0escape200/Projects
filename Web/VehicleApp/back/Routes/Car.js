@@ -6,7 +6,7 @@ const router = Router();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./photos");
+    cb(null, "../../../Web/VehicleApp/front/photos");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + file.originalname;
