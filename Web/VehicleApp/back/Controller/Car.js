@@ -44,3 +44,21 @@ export const findByIdCar = async (req, res) => {
     res.status(400).json(error);
   }
 };
+
+export const deleteCar = async (req, res) => {
+  try {
+    const car = await Car.findById(req.params.id);
+    const owner = car.owner;
+    if (owner) {
+      for (let i = 0; i < owner.data; i++) {
+        if (owner.data[i] == req.params.id) {
+          owner.data.delete(i);
+        }
+      }
+      await Car.findByIdAndDelete(req.params.id);
+      res.status(200).json("Car deleted");
+    }
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};

@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { createCar, findByIdCar, getCars } from "../Controller/Car.js";
+import {
+  createCar,
+  deleteCar,
+  findByIdCar,
+  getCars,
+} from "../Controller/Car.js";
 import multer from "multer";
 
 const router = Router();
@@ -21,5 +26,7 @@ router.post("/create/:id", upload.any("photos"), createCar);
 router.get("/getAll", getCars);
 
 router.get("/findById/:id", findByIdCar);
+
+router.post("/delete/:id", deleteCar);
 
 export default router;
