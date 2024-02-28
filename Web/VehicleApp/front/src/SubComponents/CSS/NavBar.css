@@ -1,134 +1,18 @@
 .navbarMain {
+  box-shadow: 1px 1px 5px 0px #000000, inset 1px 1px 5px 0px #000000,
+    4px 13px 3px -4px rgba(0, 0, 0, 0);
+  z-index: 3;
+}
+
+.navbarContent {
   display: flex;
   justify-content: space-between;
-  border: 1px solid black;
-  padding: 0 25px 0 25px;
-  border-radius: 5px;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  background-color: white;
-}
-
-.navbarMain > .right > .user:hover {
-  color: rgb(67, 161, 255);
-  cursor: pointer;
-}
-
-.loginMain {
-  position: absolute;
-  right: 20px;
-}
-
-.loginBox {
-  border: 1px solid black;
-  width: 200px;
-  margin-top: 5px;
+  font-size: 25px;
   padding: 5px 10px 5px 10px;
-  background-color: white;
 }
 
-.loginBox > .label > input {
-  width: 100px;
-  float: right;
-}
-
-.loginBtn:hover {
+.login:hover {
   cursor: pointer;
-  color: rgb(67, 161, 255);
-  transition: 0.3s;
-}
-
-.failMsg {
-  margin-top: 10px;
-  background-color: rgb(255, 139, 139);
-  border: 1px solid black;
-  text-align: center;
-  color: white;
-  text-shadow: 0 0 5px black;
-}
-
-.loginRegisterMain {
-  position: absolute;
-  right: 20px;
-}
-
-.loginRegisterContent {
-  border: 1px solid black;
-  padding: 5px 10px 5px 10px;
-  margin-top: 5px;
-}
-
-.loginSelect:hover {
-  cursor: pointer;
-  color: rgb(67, 161, 255);
+  color: rgb(27, 117, 208);
   transition: 0.2s;
-}
-
-.registerMain {
-  position: absolute;
-  right: 20px;
-}
-
-.registerContent {
-  width: 200px;
-  border: 1px solid black;
-  margin-top: 10px;
-  padding: 5px 10px 5px 10px;
-}
-
-.registerContent > .label > input {
-  width: 100px;
-  float: right;
-}
-
-.completeReg {
-  background-color: rgb(173, 255, 133);
-  border: 1px solid black;
-  padding: 5px 10px 5px 10px;
-  margin-top: 5px;
-}
-
-.userLogedIn:hover {
-  cursor: pointer;
-  color: rgb(67, 161, 255);
-}
-
-.accountBoxMain {
-  position: absolute;
-  right: 20px;
-  top: 45px;
-}
-
-.accountBoxContent {
-  border: 1px solid black;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  margin-top: 10px;
-}
-
-.accountBoxContent > span:hover {
-  cursor: pointer;
-  color: rgb(67, 161, 255);
-}
-
-.logedInDetails {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 20px;
-}
-
-.addButton {
-  background-color: rgb(173, 255, 133);
-  padding: 0 5px 0 5px;
-  color: white;
-  text-shadow: 1px 1px black;
-}
-
-.addButton:hover {
-  transition: 0.2s;
-  cursor: pointer;
-  text-shadow: 1px 1px 2px black;
 }

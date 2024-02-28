@@ -9,7 +9,7 @@ import Settings from "./Routes/Components/Settings.jsx";
 
 const App = () => {
   return (
-    <div style={{ margin: "20px" }}>
+    <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />

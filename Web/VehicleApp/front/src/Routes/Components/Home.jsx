@@ -11,9 +11,8 @@ const Home = () => {
       <Navbar />
       <div className="homeContent">
         <div className="homeTop">
-          <div className="content">
-            <Filter />
-          </div>
+          <div className="content"></div>
+          <Filter />
         </div>
       </div>
     </div>
