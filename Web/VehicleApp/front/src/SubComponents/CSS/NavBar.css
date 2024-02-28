@@ -5,6 +5,9 @@
   padding: 0 25px 0 25px;
   border-radius: 5px;
   align-items: center;
+  position: sticky;
+  top: 0;
+  background-color: white;
 }
 
 .navbarMain > .right > .user:hover {

@@ -2,7 +2,9 @@
   background-color: white;
   width: fit-content;
   padding: 20px;
-  margin: auto;
+  position: absolute;
+  top: 150px;
+  left: 45%;
 }
 
 .filterContent > .filters > .label > select {
