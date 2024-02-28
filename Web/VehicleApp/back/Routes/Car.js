@@ -27,6 +27,6 @@ router.get("/getAll", getCars);
 
 router.get("/findById/:id", findByIdCar);
 
-router.post("/delete/:id", deleteCar);
+router.post("/deleteById/:id", deleteCar);
 
 export default router;

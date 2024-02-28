@@ -26,19 +26,3 @@
 .listingMain:hover {
   cursor: pointer;
 }
-
-.deleteListing {
-  position: absolute;
-  color: red;
-  bottom: -20px;
-  right: -20px;
-  background-color: white;
-  padding: 10px;
-  border: 1px solid black;
-  border-radius: 100%;
-}
-
-.deleteListing:hover {
-  scale: 1.3;
-  transition: 0.2s;
-}

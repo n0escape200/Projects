@@ -5,6 +5,8 @@ import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import Listing from "../../SubComponents/Components/Listing.jsx";
 import { useNavigate } from "react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "../CSS/User.css";
 
 const User = () => {
@@ -12,6 +14,18 @@ const User = () => {
   const [userData, setUserData] = useState(undefined);
   const [carList, setCarList] = useState([]);
   const id = jwtDecode(Cookies.get("User")).findUser._id;
+
+  const deleteListing = async (_id) => {
+    await axios
+      .post(`http://localhost:3000/api/car/deleteById/${_id}`)
+      .then((res) => {
+        console.log(res);
+        getUserData();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getUserData = async () => {
     if (id) {
@@ -33,6 +47,7 @@ const User = () => {
           const res = await axios.get(
             `http://localhost:3000/api/car/findById/${element}`
           );
+
           return {
             id: element,
             type: "portrait",
@@ -51,8 +66,16 @@ const User = () => {
         const listings = await Promise.all(promises);
         setCarList(
           listings.map((item, index) => (
-            <div key={index}>
+            <div style={{ position: "relative" }} key={index}>
               <Listing {...item} />
+              <FontAwesomeIcon
+                onClick={() => {
+                  deleteListing(item.id);
+                }}
+                className="deleteListing"
+                icon={faTrash}
+                size="2xl"
+              />
             </div>
           ))
         );

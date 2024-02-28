@@ -1,8 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "../CSS/Listing.css";
+import axios from "axios";
 
 const Listing = ({
   id,
@@ -38,11 +37,6 @@ const Listing = ({
                 {currency}
               </span>
             </div>
-            <FontAwesomeIcon
-              className="deleteListing"
-              icon={faTrash}
-              size="2xl"
-            />
           </div>
         ) : (
           <div
