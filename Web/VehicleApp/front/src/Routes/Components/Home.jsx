@@ -7,6 +7,7 @@ import "../CSS/Home.css";
 
 const Home = () => {
   const [todayData, setTodayData] = useState([]);
+
   return (
     <div className="homeMain">
       <Navbar />
