@@ -1,0 +1,17 @@
+.authMain {
+  background-color: white;
+  padding: 30px;
+  min-width: 300px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.forgotPsw {
+  font-size: 15px;
+}
+
+.forgotPsw:hover {
+  cursor: pointer;
+  color: rgb(27, 117, 208);
+  transition: 0.2s;
+}
