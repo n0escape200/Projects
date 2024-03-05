@@ -64,3 +64,20 @@ export const deleteCar = async (req, res) => {
     res.status(400).json(error);
   }
 };
+
+export const getTodayCars = async (req, res) => {
+  const curretDate = new Date();
+  const formateDate = curretDate.toISOString().split("T")[0];
+  const query = {
+    createdAt: {
+      $gte: new Date(`${formateDate}T00:00:00.000Z`),
+      $lt: new Date(`${formateDate}T23:59:59.999Z`),
+    },
+  };
+  try {
+    const cars = await Car.find(query).limit(10);
+    res.status(200).json(cars);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};

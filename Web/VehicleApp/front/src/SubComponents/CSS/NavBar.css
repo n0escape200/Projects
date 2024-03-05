@@ -1,58 +1,36 @@
-.navbarMain {
-  box-shadow: 1px 1px 5px 0px #000000, inset 1px 1px 5px 0px #000000,
-    4px 13px 3px -4px rgba(0, 0, 0, 0);
-}
-
 .navbarContent {
   display: flex;
-  justify-content: space-between;
-  font-size: 25px;
-  padding: 5px 10px 5px 10px;
+  gap: 35%;
+  justify-content: center;
+  padding: 15px;
 }
 
-.right > .login:hover {
-  cursor: pointer;
-  color: rgb(27, 117, 208);
-  transition: 0.2s;
-}
-
-.authPanel {
-  position: absolute;
-  background-color: rgba(120, 120, 120, 0.8);
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1;
-}
-
-.authPanel > .content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.userDataIcon:hover {
-  cursor: pointer;
-  color: rgb(27, 117, 208);
-  transition: 0.2s;
-}
-
-.userOptions {
-  right: 0;
+.navbarContent > .right {
   display: flex;
-  flex-direction: column;
-  position: absolute;
-  z-index: 1;
-  background-color: white;
-  padding: 5px 10px 5px 10px;
-  border: 1px solid black;
-  border-top: none;
+  gap: 20px;
+  align-items: center;
 }
 
-.userOptions > .option:hover {
+.authButton {
+  color: #1c448e;
+}
+
+.authButton:hover {
   cursor: pointer;
-  color: rgb(27, 117, 208);
-  transition: 0.5s;
+  color: #848fa5;
+  transition: 0.2s;
+}
+
+.postButton {
+  color: #1c448e;
+  border: 2px solid #1c448e;
+  padding: 5px 40px 5px 40px;
+  border-radius: 10px;
+}
+
+.postButton:hover {
+  cursor: pointer;
+  background-color: #1c448e;
+  color: white;
+  transition: 0.2s;
 }

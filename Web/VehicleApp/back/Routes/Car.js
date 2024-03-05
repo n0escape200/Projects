@@ -4,6 +4,7 @@ import {
   deleteCar,
   findByIdCar,
   getCars,
+  getTodayCars,
 } from "../Controller/Car.js";
 import multer from "multer";
 
@@ -28,5 +29,7 @@ router.get("/getAll", getCars);
 router.get("/findById/:id", findByIdCar);
 
 router.post("/deleteById/:id", deleteCar);
+
+router.get("/getTodayCars", getTodayCars);
 
 export default router;
