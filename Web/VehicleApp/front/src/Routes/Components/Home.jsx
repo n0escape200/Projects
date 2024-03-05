@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../SubComponents/Components/Navbar.jsx";
 import Filter from "../../SubComponents/Components/Filter.jsx";
 import Listing from "../../SubComponents/Components/Listing.jsx";
+
 import "../CSS/Home.css";
 
 import "../CSS/Home.css";
@@ -25,16 +26,30 @@ const Home = () => {
     getTodayCars();
   }, []);
 
-  useEffect(() => {
-    console.log(todayData);
-  }, [todayData]);
-
   return (
     <div className="homeMain">
       <Navbar />
       <div className="homeContent">
         <div className="homeTop">
-          <div className="cover"></div>
+          <div className="cover">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                color: "white",
+                position: "absolute",
+                top: 120,
+                left: 150,
+                fontWeight: 700,
+                textShadow: "0px 0px 5px #FFFFFF",
+              }}
+            >
+              <span style={{ fontSize: 52 }}>Welcome to Automoto</span>
+              <span style={{ fontSize: 60 }}>
+                Start driving your dreams today!
+              </span>
+            </div>
+          </div>
           <div className="filter">
             <Filter />
           </div>
