@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRightLong,
@@ -9,6 +9,8 @@ import SelectPrice from "./SelectPrice.jsx";
 import "../CSS/Filter.css";
 import axios from "axios";
 const Filter = () => {
+  const brandRef = useRef(null);
+
   const [yearPanel, setYearPanel] = useState(false);
   const [pricePanel, setPricePanel] = useState(false);
   const [brandPanel, setBrandPanel] = useState(false);
@@ -22,6 +24,7 @@ const Filter = () => {
 
   const [data, setData] = useState();
   const [brandArray, setBrandArray] = useState([]);
+  const [filterBrand, setFilterBrand] = useState([]);
 
   const [brand, setBrand] = useState("");
 
@@ -48,28 +51,39 @@ const Filter = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (brand) {
+      const filteredArray = data.filter((item) => {
+        const value = item.brand.toUpperCase();
+        return value.includes(brand.toUpperCase());
+      });
+      setFilterBrand(filteredArray);
+    }
+  }, [brand]);
+
+  useEffect(() => {
+    const handleClick = (event) => {
+      if (brandRef.current && !brandRef.current.contains(event.target)) {
+        setBrandPanel(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, [brandRef]);
+
   return (
     <div className="filterMain">
       <div className="filterContent">
-        <div style={{ position: "relative" }} className="label">
+        <div ref={brandRef} style={{ position: "relative" }} className="label">
           <input
             placeholder=" "
             className="labelField"
             type="text"
-            name=""
-            id=""
             value={brand}
             onChange={(event) => {
               setBrand(event.target.value);
-              const filtered = data.filter((item) => {
-                const value = item.brand.toUpperCase();
-                return value.includes(event.target.value.toUpperCase());
-              });
-              const array = [];
-              filtered.map((item) => {
-                array.push(item.brand);
-              });
-              setBrandArray(array);
             }}
             onFocus={() => {
               setBrandPanel(true);
@@ -83,6 +97,7 @@ const Filter = () => {
                 backgroundColor: "white",
                 border: "1px solid black",
                 top: 65,
+                left: -20,
                 padding: "0px 10px 0px 10px",
               }}
             >
@@ -91,26 +106,42 @@ const Filter = () => {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    height: 200,
+                    maxHeight: 200,
                     width: "fit-content",
                     overflow: "scroll",
                     overflowX: "hidden",
+                    padding: 10,
                   }}
                 >
-                  {brandArray.map((item, index) => {
-                    return (
-                      <option
-                        value={item}
-                        onClick={(event) => {
-                          setBrand(event.target.value);
-                          setBrandPanel(false);
-                        }}
-                        key={index}
-                      >
-                        {item}
-                      </option>
-                    );
-                  })}
+                  {brand.length == 0 ? (
+                    <>
+                      {brandArray.map((item, index) => (
+                        <option
+                          onClick={(event) => {
+                            setBrand(event.target.value);
+                            setBrandPanel(false);
+                          }}
+                          key={index}
+                        >
+                          {item}
+                        </option>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      {filterBrand.map((item, index) => (
+                        <option
+                          onClick={(event) => {
+                            setBrand(event.target.value);
+                            setBrandPanel(false);
+                          }}
+                          key={index}
+                        >
+                          {item.brand}
+                        </option>
+                      ))}
+                    </>
+                  )}
                 </div>
               )}
             </div>
