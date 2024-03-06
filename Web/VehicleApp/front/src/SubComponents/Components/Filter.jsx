@@ -197,10 +197,11 @@ const Filter = () => {
               transform: "translateX(-50%)",
               fontSize: 19,
               borderTop: "1px solid black",
+              alignItems: "center",
             }}
           >
             <span>{fromYear}</span>
-            <FontAwesomeIcon icon={faArrowRightLong} />
+            {fromYear != "" && <FontAwesomeIcon icon={faArrowRightLong} />}
             <span>{toYear}</span>
           </div>
           <div style={{ top: "50%", right: -30 }} className="column"></div>
