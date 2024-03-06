@@ -23,10 +23,13 @@ const Filter = () => {
   const [toPrice, setToPrice] = useState("");
 
   const [data, setData] = useState();
+
   const [brandArray, setBrandArray] = useState([]);
   const [filterBrand, setFilterBrand] = useState([]);
-
   const [brand, setBrand] = useState("");
+
+  const [modelArray, setModelArray] = useState([]);
+  const [model, setModel] = useState("");
 
   const getData = async () => {
     await axios
@@ -52,12 +55,18 @@ const Filter = () => {
   }, [data]);
 
   useEffect(() => {
-    if (brand) {
+    if (brand && data) {
       const filteredArray = data.filter((item) => {
         const value = item.brand.toUpperCase();
         return value.includes(brand.toUpperCase());
       });
       setFilterBrand(filteredArray);
+
+      data.map((item) => {
+        if (item.brand.toUpperCase() == brand.toUpperCase()) {
+          setModelArray(item.models);
+        }
+      });
     }
   }, [brand]);
 
@@ -72,6 +81,10 @@ const Filter = () => {
       document.removeEventListener("mousedown", handleClick);
     };
   }, [brandRef]);
+
+  useEffect(() => {
+    console.log(modelArray);
+  }, [modelArray]);
 
   return (
     <div className="filterMain">
@@ -155,10 +168,16 @@ const Filter = () => {
             placeholder=" "
             className="labelField"
             type="text"
-            name=""
-            id=""
+            disabled={modelArray.length == 0 ? true : false}
           />
           <span className="labelText">Model </span>
+          {modelPanel && (
+            <div>
+              {modelArray.map((item, index) => {
+                return <option key={index}>{item}</option>;
+              })}
+            </div>
+          )}
           <div style={{ top: "50%", right: -20 }} className="column"></div>
         </div>
 
