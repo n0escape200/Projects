@@ -10,6 +10,7 @@ import "../CSS/Filter.css";
 import axios from "axios";
 const Filter = () => {
   const brandRef = useRef(null);
+  const modelRef = useRef(null);
 
   const [yearPanel, setYearPanel] = useState(false);
   const [pricePanel, setPricePanel] = useState(false);
@@ -29,6 +30,7 @@ const Filter = () => {
   const [brand, setBrand] = useState("");
 
   const [modelArray, setModelArray] = useState([]);
+  const [filterModel, setFilterModel] = useState([]);
   const [model, setModel] = useState("");
 
   const getData = async () => {
@@ -67,13 +69,30 @@ const Filter = () => {
           setModelArray(item.models);
         }
       });
+
+      if (model.length != 0) {
+        setModel("");
+      }
     }
   }, [brand]);
+
+  useEffect(() => {
+    if (model) {
+      const filteredArray = modelArray.filter((item) => {
+        const value = item.toUpperCase();
+        return value.includes(model.toUpperCase());
+      });
+      setFilterModel(filteredArray);
+    }
+  }, [model]);
 
   useEffect(() => {
     const handleClick = (event) => {
       if (brandRef.current && !brandRef.current.contains(event.target)) {
         setBrandPanel(false);
+      }
+      if (modelRef.current && !modelRef.current.contains(event.target)) {
+        setModelPanel(false);
       }
     };
     document.addEventListener("mousedown", handleClick);
@@ -81,10 +100,6 @@ const Filter = () => {
       document.removeEventListener("mousedown", handleClick);
     };
   }, [brandRef]);
-
-  useEffect(() => {
-    console.log(modelArray);
-  }, [modelArray]);
 
   return (
     <div className="filterMain">
@@ -163,19 +178,68 @@ const Filter = () => {
           <div style={{ top: "50%", right: -20 }} className="column"></div>
         </div>
 
-        <div style={{ position: "relative" }} className="label">
+        <div ref={modelRef} style={{ position: "relative" }} className="label">
           <input
             placeholder=" "
             className="labelField"
             type="text"
+            value={model}
+            onChange={(event) => {
+              setModel(event.target.value);
+            }}
             disabled={modelArray.length == 0 ? true : false}
+            onFocus={() => {
+              setModelPanel(true);
+            }}
           />
           <span className="labelText">Model </span>
           {modelPanel && (
-            <div>
-              {modelArray.map((item, index) => {
-                return <option key={index}>{item}</option>;
-              })}
+            <div
+              style={{
+                position: "absolute",
+                backgroundColor: "white",
+                border: "1px solid black",
+                top: 65,
+                left: -20,
+                padding: "0px 10px 0px 10px",
+                maxHeight: 200,
+                overflow: "scroll",
+                overflowX: "hidden",
+              }}
+            >
+              {model.length == 0 ? (
+                <>
+                  {modelArray.map((item, index) => {
+                    return (
+                      <option
+                        onClick={(event) => {
+                          setModel(event.target.value);
+                          setModelPanel(false);
+                        }}
+                        key={index}
+                      >
+                        {item}
+                      </option>
+                    );
+                  })}
+                </>
+              ) : (
+                <>
+                  {filterModel.map((item, index) => {
+                    return (
+                      <option
+                        onClick={(event) => {
+                          setModel(event.target.value);
+                          setModelPanel(false);
+                        }}
+                        key={index}
+                      >
+                        {item}
+                      </option>
+                    );
+                  })}
+                </>
+              )}
             </div>
           )}
           <div style={{ top: "50%", right: -20 }} className="column"></div>

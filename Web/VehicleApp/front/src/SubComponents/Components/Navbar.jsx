@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Auth from "./Auth.jsx";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCaretDown,
@@ -15,7 +14,7 @@ import Cookies from "js-cookie";
 import "../CSS/Navbar.css";
 
 const Navbar = () => {
-  const navigate = useNavigate();
+  const [authPanel, setAuthPanel] = useState(0);
 
   return (
     <div className="navbarMain">
@@ -27,9 +26,32 @@ const Navbar = () => {
           <span>Dealers</span>
           <span>Sellers</span>
           <div>
-            <span className="authButton">Sign up </span>
+            <span
+              onClick={() => {
+                if (authPanel != 1) {
+                  setAuthPanel(1);
+                } else {
+                  setAuthPanel(0);
+                }
+              }}
+              className="authButton"
+            >
+              Sign up{" "}
+            </span>
             or
-            <span className="authButton"> Sign in</span>
+            <span
+              onClick={() => {
+                if (authPanel != 2) {
+                  setAuthPanel(2);
+                } else {
+                  setAuthPanel(0);
+                }
+              }}
+              className="authButton"
+            >
+              {" "}
+              Sign in
+            </span>
           </div>
           <span className="postButton">Post ad</span>
           <FontAwesomeIcon icon={faComments} />
@@ -39,6 +61,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      {authPanel == 1 ? <Auth /> : <></>}
     </div>
   );
 };
