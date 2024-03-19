@@ -1,0 +1,2 @@
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Repository\obj\Debug\Repository.csproj.AssemblyReference.cache
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Repository\obj\Debug\Repository.csproj.CoreCompileInputs.cache

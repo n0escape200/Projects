@@ -1,0 +1,2 @@
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Vehicle\obj\Debug\Vehicle.csproj.AssemblyReference.cache
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Vehicle\obj\Debug\Vehicle.csproj.CoreCompileInputs.cache
