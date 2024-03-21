@@ -4,7 +4,7 @@ using Vehicle;
 
 namespace Repository
 {
-    internal class RepositoryClass:VehicleClass
+    public class RepositoryClass : VehicleClass
     {
         List<VehicleClass> repository;
 
@@ -18,27 +18,26 @@ namespace Repository
             repository.Add(v);
         }
 
-        public void GetAll()
+        public List<VehicleClass> GetAll()
         {
-            foreach (VehicleClass v in repository)
-            {
-                v.Info();
-            }
+            return repository;
         }
 
-        public void GetByIndex(int index)
+        public VehicleClass GetByIndex(int index)
         {
-            repository[index].Info();
+            return repository[index];
         }
 
         public void UpdateByIndex(int index, VehicleClass v)
         {
             repository[index] = v;
+            Console.WriteLine("Updated!\n");
         }
 
         public void DeleteByIndex(int index)
         {
             repository.RemoveAt(index);
+            Console.WriteLine("Deleted!\n");
         }
     }
 }

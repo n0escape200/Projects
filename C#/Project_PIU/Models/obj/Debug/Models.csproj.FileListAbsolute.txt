@@ -1,0 +1,6 @@
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Models\bin\Debug\Models.dll
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Models\bin\Debug\Models.pdb
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Models\obj\Debug\Models.csproj.AssemblyReference.cache
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Models\obj\Debug\Models.csproj.CoreCompileInputs.cache
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Models\obj\Debug\Models.dll
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Models\obj\Debug\Models.pdb

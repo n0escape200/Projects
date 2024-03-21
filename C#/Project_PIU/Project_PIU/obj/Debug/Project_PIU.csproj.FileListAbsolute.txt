@@ -1,2 +1,12 @@
 C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\obj\Debug\Project_PIU.csproj.AssemblyReference.cache
 C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\obj\Debug\Project_PIU.csproj.CoreCompileInputs.cache
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\bin\Debug\Project_PIU.exe.config
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\bin\Debug\Project_PIU.exe
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\bin\Debug\Project_PIU.pdb
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\bin\Debug\Models.dll
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\bin\Debug\Repository.dll
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\bin\Debug\Models.pdb
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\bin\Debug\Repository.pdb
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\obj\Debug\Project_PIU.csproj.CopyComplete
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\obj\Debug\Project_PIU.exe
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\obj\Debug\Project_PIU.pdb

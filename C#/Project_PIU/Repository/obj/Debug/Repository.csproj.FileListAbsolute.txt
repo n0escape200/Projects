@@ -1,2 +1,9 @@
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Repository\bin\Debug\Repository.dll
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Repository\bin\Debug\Repository.pdb
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Repository\bin\Debug\Models.dll
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Repository\bin\Debug\Models.pdb
 C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Repository\obj\Debug\Repository.csproj.AssemblyReference.cache
 C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Repository\obj\Debug\Repository.csproj.CoreCompileInputs.cache
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Repository\obj\Debug\Repository.csproj.CopyComplete
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Repository\obj\Debug\Repository.dll
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Repository\obj\Debug\Repository.pdb

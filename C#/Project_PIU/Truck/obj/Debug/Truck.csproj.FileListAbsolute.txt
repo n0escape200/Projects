@@ -1,2 +1,0 @@
-C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Truck\obj\Debug\Truck.csproj.AssemblyReference.cache
-C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Truck\obj\Debug\Truck.csproj.CoreCompileInputs.cache
