@@ -10,3 +10,5 @@ C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\bin\Debug\Repository.
 C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\obj\Debug\Project_PIU.csproj.CopyComplete
 C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\obj\Debug\Project_PIU.exe
 C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\obj\Debug\Project_PIU.pdb
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\bin\Debug\Authentication.dll
+C:\Users\n0_es\Desktop\Projects\C#\Project_PIU\Project_PIU\bin\Debug\Authentication.pdb

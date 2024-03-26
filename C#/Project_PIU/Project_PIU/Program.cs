@@ -5,6 +5,7 @@ using Motorcycle;
 using Repository;
 using System.Collections.Generic;
 using Vehicle;
+using Authentication;
 
 namespace Project_PIU
 {
@@ -12,6 +13,7 @@ namespace Project_PIU
     {
         static void printMenu()
         {
+            Console.WriteLine("0)EXIT");
             Console.WriteLine("1)Add a vehicle");
             Console.WriteLine("2)Read all the data");
             Console.WriteLine("3)Read vehicle with id");
@@ -43,170 +45,240 @@ namespace Project_PIU
 
             string opr = String.Empty;
 
-            if(repository.ok == 1)
+            int login = 0;
+
+            User user = new User();
+
+            long currentUserId = -1;
+
+            while (login != 1)
             {
-                do
+                Console.Clear();
+                Console.WriteLine("1)Login");
+                Console.WriteLine("2)Register");
+                Console.WriteLine(">>>"); opr = Console.ReadLine().ToUpper();
+                switch(opr)
                 {
-                    Console.Clear();
-                    printMenu();
-                    Console.WriteLine(">>>"); opr = Console.ReadLine().ToUpper();
+                    case "1":
+                        {
+                            Console.WriteLine("Username:");
+                            string username = Console.ReadLine();
 
-                    switch (opr)
+                            Console.WriteLine("Password:");
+                            string password = Console.ReadLine();
+
+                            currentUserId = user.Login(username, password);
+
+                            if(currentUserId == -1)
+                            {
+                                Console.WriteLine("Error...");
+                            }else if(currentUserId == 0)
+                            {
+                                Console.WriteLine("User not found");
+                            }
+                            else
+                            {
+                                Console.WriteLine("User loged in");
+                                login = 1;
+                            }
+
+                        }
+                        break;
+                    case "2":
+                        {
+                            Console.WriteLine("First name:");
+                            string fname = Console.ReadLine();
+
+                            Console.WriteLine("Last name:");
+                            string lname = Console.ReadLine();
+
+                            Console.WriteLine("Username:");
+                            string username = Console.ReadLine(); 
+                            
+                            Console.WriteLine("Password:");
+                            string password = Console.ReadLine();
+
+                            user = new User(fname, lname, username, password);
+                            user.Register();
+                            Console.WriteLine("User registered");
+                        }
+                        break;  
+                    default:
+                        Console.WriteLine("Option unknown");
+                        break;
+                }
+                Console.WriteLine("Press any key...");
+                Console.ReadKey();
+            } 
+
+            
+                if (repository.ok == 1)
+                {
+                    do
                     {
-                        case "1":
-                            {
+                        Console.Clear();
+                        printMenu();
+                        Console.WriteLine(">>>"); opr = Console.ReadLine().ToUpper();
 
-                                Console.WriteLine("Type of vehicle: (Car)(Truck)(Motorcycle)");
-                                string vehicle = Console.ReadLine().ToUpper();
-                                if (vehicle == "CAR" || vehicle == "TRUCK" || vehicle == "MOTORCYCLE")
+                        switch (opr)
+                        {
+                            case "0":
+                                break;
+
+                            case "1":
                                 {
-                                    Console.WriteLine("Brand:");
-                                    brand = Console.ReadLine();
 
-                                    Console.WriteLine("Model:");
-                                    model = Console.ReadLine();
-
-                                    Console.WriteLine("Year:");
-                                    year = Console.ReadLine();
-
-                                    Console.WriteLine("Condition:");
-                                    condition = Console.ReadLine();
-
-                                    Console.WriteLine("Km:");
-                                    km = Int32.Parse(Console.ReadLine());
-
-                                    Console.WriteLine("Price:");
-                                    price = Int32.Parse(Console.ReadLine());
-
-                                    switch (vehicle)
+                                    Console.WriteLine("Type of vehicle: (Car)(Truck)(Motorcycle)");
+                                    string vehicle = Console.ReadLine().ToUpper();
+                                    if (vehicle == "CAR" || vehicle == "TRUCK" || vehicle == "MOTORCYCLE")
                                     {
-                                        case "CAR":
-                                            {
-                                                Console.WriteLine("Number of doors:");
-                                                nrDoors = Int32.Parse(Console.ReadLine());
-                                                Console.WriteLine("\n");
+                                        Console.WriteLine("Brand:");
+                                        brand = Console.ReadLine();
 
-                                                Console.WriteLine("Engine horse power:");
-                                                cp = Int32.Parse(Console.ReadLine());
-                                                Console.WriteLine("\n");
+                                        Console.WriteLine("Model:");
+                                        model = Console.ReadLine();
 
-                                                Console.WriteLine("Body type:");
-                                                body = Console.ReadLine();
-                                                Console.WriteLine("\n");
+                                        Console.WriteLine("Year:");
+                                        year = Console.ReadLine();
 
-                                                repository.Add(new CarClass(brand, model, year, km, price, condition, nrDoors, cp, body));
-                                            }
-                                            break;
-                                        case "TRUCK":
-                                            {
-                                                Console.WriteLine("Cargo capacity:");
-                                                cargo = Int32.Parse(Console.ReadLine());
-                                                Console.WriteLine("\n");
+                                        Console.WriteLine("Condition:");
+                                        condition = Console.ReadLine();
 
-                                                Console.WriteLine("Tow capacity:");
-                                                tow = Int32.Parse(Console.ReadLine());
-                                                Console.WriteLine("\n");
-                                                repository.Add(new TruckClass(brand, model, year, km, price, condition, cargo, tow));
-                                            }
-                                            break;
-                                        case "MOTORCYCLE":
-                                            {
-                                                Console.WriteLine("Cylinder capacity:");
-                                                cc = Int32.Parse(Console.ReadLine());
-                                                Console.WriteLine("\n");
+                                        Console.WriteLine("Km:");
+                                        km = Int32.Parse(Console.ReadLine());
 
-                                                Console.WriteLine("Motorcycle type:");
-                                                type = Console.ReadLine();
-                                                Console.WriteLine("\n");
-                                                repository.Add(new MotorcycleClass(brand, model, year, km, price, condition, cc, type));
-                                            }
-                                            break;
+                                        Console.WriteLine("Price:");
+                                        price = Int32.Parse(Console.ReadLine());
+
+                                        switch (vehicle)
+                                        {
+                                            case "CAR":
+                                                {
+                                                    Console.WriteLine("Number of doors:");
+                                                    nrDoors = Int32.Parse(Console.ReadLine());
+                                                    Console.WriteLine("\n");
+
+                                                    Console.WriteLine("Engine horse power:");
+                                                    cp = Int32.Parse(Console.ReadLine());
+                                                    Console.WriteLine("\n");
+
+                                                    Console.WriteLine("Body type:");
+                                                    body = Console.ReadLine();
+                                                    Console.WriteLine("\n");
+
+                                                    repository.Add(new CarClass(currentUserId, brand, model, year, km, price, condition, nrDoors, cp, body));
+                                                }
+                                                break;
+                                            case "TRUCK":
+                                                {
+                                                    Console.WriteLine("Cargo capacity:");
+                                                    cargo = Int32.Parse(Console.ReadLine());
+                                                    Console.WriteLine("\n");
+
+                                                    Console.WriteLine("Tow capacity:");
+                                                    tow = Int32.Parse(Console.ReadLine());
+                                                    Console.WriteLine("\n");
+                                                    repository.Add(new TruckClass(currentUserId,brand, model, year, km, price, condition, cargo, tow));
+                                                }
+                                                break;
+                                            case "MOTORCYCLE":
+                                                {
+                                                    Console.WriteLine("Cylinder capacity:");
+                                                    cc = Int32.Parse(Console.ReadLine());
+                                                    Console.WriteLine("\n");
+
+                                                    Console.WriteLine("Motorcycle type:");
+                                                    type = Console.ReadLine();
+                                                    Console.WriteLine("\n");
+                                                    repository.Add(new MotorcycleClass(currentUserId,brand, model, year, km, price, condition, cc, type));
+                                                }
+                                                break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Type unknown...");
                                     }
                                 }
-                                else
-                                {
-                                    Console.WriteLine("Type unknown...");
-                                }
-                            }
-                            break;
+                                break;
 
-                        case "2":
-                            {
-                                List<VehicleClass> list = repository.GetAll();
-                                if (list.Count != 0)
+                            case "2":
                                 {
-                                    for (int i = 0; i < list.Count; i++)
+                                    List<VehicleClass> list = repository.GetAll();
+                                    if (list.Count != 0)
                                     {
-                                        Console.WriteLine(list[i].Info());
+                                        for (int i = 0; i < list.Count; i++)
+                                        {
+                                            Console.WriteLine(list[i].Info());
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Repository is empty");
                                     }
                                 }
-                                else
-                                {
-                                    Console.WriteLine("Repository is empty");
-                                }
-                            }
-                            break;
+                                break;
 
-                        case "3":
-                            {
-                                int id;
-                                Console.WriteLine("Get the vehicle at Id:");
-                                id = Int32.Parse(Console.ReadLine());
-                                VehicleClass aux = repository.GetById(id);
-                                if (aux.Type == "undefined")
+                            case "3":
                                 {
-                                    Console.WriteLine($"Vehicle with id:{id} doesn't exist");
+                                    int id;
+                                    Console.WriteLine("Get the vehicle at Id:");
+                                    id = Int32.Parse(Console.ReadLine());
+                                    VehicleClass aux = repository.GetById(id);
+                                    if (aux.Type == "undefined")
+                                    {
+                                        Console.WriteLine($"Vehicle with id:{id} doesn't exist");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine(aux.Info());
+                                    }
                                 }
-                                else
+                                break;
+                            case "4":
                                 {
-                                    Console.WriteLine(aux.Info());
+                                    int id;
+                                    Console.WriteLine("Delete the vehicle at Id:");
+                                    id = Int32.Parse(Console.ReadLine());
+                                    repository.DeleteById(id);
                                 }
-                            }
-                            break;
-                        case "4":
-                            {
-                                int id;
-                                Console.WriteLine("Delete the vehicle at Id:");
-                                id = Int32.Parse(Console.ReadLine());
-                                repository.DeleteById(id);
-                            }
-                            break;
-                        case "5":
-                            {
-                                int id;
-                                Console.WriteLine("Add the vehicle at Id in .txt:");
-                                id = Int32.Parse(Console.ReadLine());
-                                repository.AddByIdToFile(id);
-                            }
-                            break;
-                        case "6":
-                            {
-                                if (repository.GetSize() != 0)
+                                break;
+                            case "5":
                                 {
-                                    repository.AddRepoToFile();
+                                    int id;
+                                    Console.WriteLine("Add the vehicle at Id in .txt:");
+                                    id = Int32.Parse(Console.ReadLine());
+                                    repository.AddByIdToFile(id);
                                 }
-                                else
+                                break;
+                            case "6":
                                 {
-                                    Console.WriteLine("Repository is empty");
+                                    if (repository.GetSize() != 0)
+                                    {
+                                        repository.AddRepoToFile();
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Repository is empty");
+                                    }
                                 }
-                            }
-                            break;
-                        case "7":
-                            {
-                                repository.GetDataFromFile();
-                            }
-                            break;
-                        default:
-                            Console.WriteLine("Option unknown");
-                            break;
-                    }
+                                break;
+                            case "7":
+                                {
+                                    repository.GetDataFromFile();
+                                }
+                                break;
+                            default:
+                                Console.WriteLine("Option unknown");
+                                break;
+                        }
 
-                    Console.WriteLine("Press any key ...");
-                    Console.ReadKey();
+                        Console.WriteLine("Press any key ...");
+                        Console.ReadKey();
 
-                } while (opr != "S");
-            }
-
+                    } while (opr != "0");
+                }
+           
             Console.ReadKey(); // return 0;
         }
     }

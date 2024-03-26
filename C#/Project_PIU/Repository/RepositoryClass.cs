@@ -120,11 +120,14 @@ namespace Repository
             char separator = '_';
             using(StreamReader sr = new StreamReader(filename))
             {
-                linie = sr.ReadLine();
-                while(linie != null)
+                
+                while((linie = sr.ReadLine()) != null)
                 {
                     string[] aux = linie.Split(separator);
-                    VehicleClass v = new VehicleClass(aux[0], aux[1], aux[2],Int32.Parse(aux[3]), Int32.Parse(aux[4]), aux[5], aux[6]);
+                    VehicleClass v = new VehicleClass(long.Parse(aux[1]),
+                                                      aux[2], aux[3],
+                                                      aux[4], Int32.Parse(aux[5]), 
+                                                      Int32.Parse(aux[6]), aux[7], aux[8]);
                     Add(v);
                 }
                 sr.Close();

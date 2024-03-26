@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{2CE9679A-C19A-4ACC-806B-CA740000411E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication", "Authentication\Authentication.csproj", "{4E2D04E1-CC80-44B8-98B1-2A8F5FFA6AC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2CE9679A-C19A-4ACC-806B-CA740000411E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CE9679A-C19A-4ACC-806B-CA740000411E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CE9679A-C19A-4ACC-806B-CA740000411E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E2D04E1-CC80-44B8-98B1-2A8F5FFA6AC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E2D04E1-CC80-44B8-98B1-2A8F5FFA6AC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E2D04E1-CC80-44B8-98B1-2A8F5FFA6AC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E2D04E1-CC80-44B8-98B1-2A8F5FFA6AC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
