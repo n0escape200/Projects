@@ -47,5 +47,11 @@
     <Compile Include="TruckClass.cs" />
     <Compile Include="VehicleClass.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Authentication\Authentication.csproj">
+      <Project>{4e2d04e1-cc80-44b8-98b1-2a8f5ffa6ac0}</Project>
+      <Name>Authentication</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

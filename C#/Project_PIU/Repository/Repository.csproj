@@ -45,6 +45,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Authentication\Authentication.csproj">
+      <Project>{4e2d04e1-cc80-44b8-98b1-2a8f5ffa6ac0}</Project>
+      <Name>Authentication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{8ce8c95a-6844-4e7e-8f25-0d4fd75a7d3f}</Project>
       <Name>Models</Name>

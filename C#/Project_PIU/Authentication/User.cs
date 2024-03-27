@@ -9,12 +9,15 @@ namespace Authentication
 {
     public class User
     {
-  
+
         public long Id;
-        string FirstName;
-        string LastName;
-        string Username;
-        string Password;
+        public string FirstName;
+        public string LastName;
+        public string Username;
+        public string Password;
+        string Type;
+
+        static public int adminCode = 35057;
 
         string fileName = "C:\\Users\\n0_es\\Desktop\\Projects\\C#\\Project_PIU\\Authentication\\UserData.txt";
 
@@ -26,27 +29,29 @@ namespace Authentication
             Password = string.Empty;
         }
 
-        public User(string fname,string lname,string username,string password) {
+        public User(string fname,string lname,string username,string password,string type = "admin") {
             Id = DateTime.Now.Ticks;
             FirstName = fname;
             LastName = lname;
             Username = username;
             Password = password;
+            Type = type.ToUpper();
         }
 
-        string FormatForData()
+        virtual public string FormatForData()
         {
-            string format = String.Format("{1}{0}{2}{0}{3}{0}{4}{0}{5}",
+            string format = String.Format("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}",
                 "_",
                 Id,
                 FirstName,
                 LastName,
                 Username,
-                Password);
+                Password,
+                "ADMIN");
             return format;
         }
 
-        public void Register() {
+        virtual public void Register() {
 
             using(StreamWriter sw = new StreamWriter(fileName))
             {

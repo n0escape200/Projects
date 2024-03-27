@@ -6,12 +6,13 @@ using Repository;
 using System.Collections.Generic;
 using Vehicle;
 using Authentication;
+using Models;
 
 namespace Project_PIU
 {
     internal class Program
     {
-        static void printMenu()
+        static void AdminMenu()
         {
             Console.WriteLine("0)EXIT");
             Console.WriteLine("1)Add a vehicle");
@@ -22,6 +23,13 @@ namespace Project_PIU
             Console.WriteLine("6)Add data from repo to file");
             Console.WriteLine("7)Add data from .txt to repository");
 
+        }
+
+        static void CustomerMenu()
+        {
+            Console.WriteLine("0)EXIT");
+            Console.WriteLine("2)Read all the data");
+            Console.WriteLine("3)Read vehicle with id");
         }
 
         static void Main(string[] args)
@@ -48,6 +56,7 @@ namespace Project_PIU
             int login = 0;
 
             User user = new User();
+            Customer customer = new Customer();
 
             long currentUserId = -1;
 
@@ -98,8 +107,25 @@ namespace Project_PIU
                             Console.WriteLine("Password:");
                             string password = Console.ReadLine();
 
-                            user = new User(fname, lname, username, password);
-                            user.Register();
+                            Console.WriteLine("Admin Code (optional):");
+                            int adminCode = Int32.Parse(Console.ReadLine());
+
+                            if (adminCode == User.adminCode)
+                            {
+                                Console.WriteLine("User will be registered in as an ADMIN");
+                                user = new User(fname, lname, username, password);
+                                user.Register();
+                            }
+                            else
+                            {
+                                Console.WriteLine("User will be registered in as an ADMIN");
+                                Console.WriteLine("What is your current buget:");
+                                int buget = Int32.Parse(Console.ReadLine());
+                                customer = new Customer(fname, lname, password, buget);
+                                customer.Register();
+                            }
+
+                           
                             Console.WriteLine("User registered");
                         }
                         break;  
@@ -117,7 +143,7 @@ namespace Project_PIU
                     do
                     {
                         Console.Clear();
-                        printMenu();
+                        AdminMenu();
                         Console.WriteLine(">>>"); opr = Console.ReadLine().ToUpper();
 
                         switch (opr)
@@ -240,15 +266,29 @@ namespace Project_PIU
                                     int id;
                                     Console.WriteLine("Delete the vehicle at Id:");
                                     id = Int32.Parse(Console.ReadLine());
-                                    repository.DeleteById(id);
+                                    if(repository.DeleteById(id) == true)
+                                {
+                                    Console.WriteLine("Vehicle deleted");
                                 }
+                                else
+                                {
+                                    Console.WriteLine("Vehicle not found");
+                                }
+                            }
                                 break;
                             case "5":
                                 {
                                     int id;
                                     Console.WriteLine("Add the vehicle at Id in .txt:");
                                     id = Int32.Parse(Console.ReadLine());
-                                    repository.AddByIdToFile(id);
+                                    if(repository.AddByIdToFile(id) == true)
+                                {
+                                    Console.WriteLine("Vehicle added to file");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Vehicle not found");
+                                }
                                 }
                                 break;
                             case "6":
@@ -265,7 +305,10 @@ namespace Project_PIU
                                 break;
                             case "7":
                                 {
-                                    repository.GetDataFromFile();
+                                    if(repository.GetDataFromFile() == true)
+                                {
+                                    Console.WriteLine("Data added to repository");
+                                }
                                 }
                                 break;
                             default:

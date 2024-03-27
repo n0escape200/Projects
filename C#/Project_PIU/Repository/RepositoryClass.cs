@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Remoting.Messaging;
 using Vehicle;
 
 namespace Repository
@@ -60,46 +61,34 @@ namespace Repository
         public void UpdateByIndex(int index, VehicleClass v)
         {
             repository[index] = v;
-            Console.WriteLine("Updated!\n");
         }
 
-        public void DeleteById(int id)
+        public bool DeleteById(int id)
         {
-            int ok = 0;
             for (int i = 0; i < repository.Count; i++)
             {
                 if (repository[i].Id == id)
-                {
-                    ok = 1;
+                {                 
                     repository.RemoveAt(i);
-                    break;
+                    return true;
                 }
             }
-            if(ok == 0)
-            {
-                Console.WriteLine("Vehicle doesn't exist");
-            }
-            else
-            {
-                Console.WriteLine("Vehicle deleted");
-            }
+            return false;
         }
 
-        public void AddByIdToFile(int id)
+        public bool AddByIdToFile(int id)
         {
             VehicleClass vehicle = GetById(id);
-            if(vehicle.Id != -1)
+            if (vehicle.Id != -1)
             {
                 using(StreamWriter sw = new StreamWriter(filename))
                 {
                     sw.WriteLine(vehicle.FormatDataForFileSave());
                     sw.Close();
+                    return true;
                 }
             }
-            else
-            {
-                Console.WriteLine($"Vehicle with id:{id} not found");
-            }
+            return false;
         }
 
         public void AddRepoToFile()
@@ -114,7 +103,7 @@ namespace Repository
             }
         }
 
-        public void GetDataFromFile()
+        public bool GetDataFromFile()
         {
             string linie;
             char separator = '_';
@@ -132,7 +121,7 @@ namespace Repository
                 }
                 sr.Close();
             }
-            Console.WriteLine("Data added to repository");
+            return true;
         }
     }
 }
